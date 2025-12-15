@@ -13,39 +13,29 @@ services:
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
       WORDPRESS_DB_NAME: ${DB_NAME}
-      
+
       # Debug settings
       WORDPRESS_DEBUG: 'true'
       WORDPRESS_DEBUG_LOG: 'true'
       WORDPRESS_DEBUG_DISPLAY: 'false'
       WORDPRESS_SCRIPT_DEBUG: 'true'
-      
-      # Multisite support (commented by default)
-      # WORDPRESS_CONFIG_EXTRA: |
-      #   define('WP_ALLOW_MULTISITE', true);
-      #   define('MULTISITE', true);
-      #   define('SUBDOMAIN_INSTALL', false);
-      #   define('DOMAIN_CURRENT_SITE', 'localhost');
-      #   define('PATH_CURRENT_SITE', '/');
-      #   define('SITE_ID_CURRENT_SITE', 1);
-      #   define('BLOG_ID_CURRENT_SITE', 1);
-      
+
       # Performance
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_REDIS_HOST', 'redis');
         define('WP_REDIS_PORT', 6379);
         define('WP_CACHE', true);
         define('FS_METHOD', 'direct');
-        
+
         // MailHog SMTP
         define('SMTP_HOST', 'mailhog');
         define('SMTP_PORT', 1025);
-        
+
       # Xdebug 3.x
       XDEBUG_MODE: debug,develop
       XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003
       PHP_IDE_CONFIG: serverName=studio-docker
-      
+
     volumes:
       - ./wp-content/themes:/var/www/html/wp-content/themes
       - ./wp-content/plugins:/var/www/html/wp-content/plugins
@@ -67,7 +57,7 @@ services:
   db:
     image: mysql:8.0
     container_name: studio_db
-    command: 
+    command:
       - --default-authentication-plugin=mysql_native_password
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -83,7 +73,7 @@ services:
     networks:
       - studio-net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -100,7 +90,7 @@ services:
     networks:
       - studio-net
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 3s
       retries: 3
@@ -110,8 +100,8 @@ services:
     image: mailhog/mailhog:latest
     container_name: studio_mailhog
     ports:
-      - "1025:1025"  # SMTP
-      - "8025:8025"  # Web UI
+      - "1025:1025"
+      - "8025:8025"
     networks:
       - studio-net
 
