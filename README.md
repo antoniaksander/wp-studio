@@ -1,12 +1,11 @@
-# 🚀 WP-Studio - Ultimate WordPress Development Environment
+# WP-Studio - Ultimate WordPress Development Environment
 
-**Team:** 2 Developers  
 **Purpose:** Commercial WordPress theme & plugin development  
 **Tech Stack:** Docker, PHP 8.2, MySQL 8.0, Node 20, Redis, WP-CLI
 
 ---
 
-## 🎯 Quick Start (5 Minutes)
+## Quick Start (5 Minutes)
 
 ### 1. First Time Setup
 
@@ -67,7 +66,7 @@ make lint-fix          # Auto-fix code style
 
 ---
 
-## 🎨 Project Structure
+## Project Structure
 
 ### Themes
 
@@ -111,7 +110,7 @@ make test              # Run tests (if configured)
 
 ---
 
-## 🛠️ Development Scenarios
+## Development Scenarios
 
 ### Scenario 1: New Plugin
 
@@ -151,16 +150,15 @@ cp -r wp-content/themes/_boilerplate-block wp-content/themes/my-block-theme
 
 ---
 
-## 🔒 Security Notes
+## Security Notes
 
-- **Never commit `.env` file**
 - Generate unique salts for each environment
 - Use strong passwords in production
 - Keep WordPress and plugins updated
 
 ---
 
-## 🐛 Debugging
+## Debugging
 
 ### Enable Xdebug in VS Code
 
@@ -178,7 +176,7 @@ docker-compose logs db # Database logs
 
 ---
 
-## 📦 Deployment
+## Deployment
 
 ### Export for Sale
 
@@ -194,7 +192,7 @@ zip -r my-theme.zip . -x "node_modules/*" "*.git/*" "*.md"
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### "Cannot connect to database"
 
