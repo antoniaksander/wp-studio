@@ -9,6 +9,7 @@
 ## 🎯 Quick Start (5 Minutes)
 
 ### 1. First Time Setup
+
 ```bash
 # Clone the repository
 git clone <your-repo-url> WP-Studio
@@ -28,6 +29,7 @@ make fresh
 ```
 
 ### 2. Access Points
+
 - **WordPress:** http://localhost:8000
 - **Admin:** http://localhost:8000/wp-admin (admin/admin)
 - **Database:** http://localhost:8080
@@ -37,6 +39,7 @@ make fresh
 ---
 
 ## 📚 Common Commands
+
 ```bash
 make help              # Show all commands
 make up                # Start studio
@@ -67,14 +70,17 @@ make lint-fix          # Auto-fix code style
 ## 🎨 Project Structure
 
 ### Themes
+
 - `_boilerplate-classic/` - Traditional PHP theme starter
 - `_boilerplate-woo/` - UnderscoreTW for WooCommerce
 - `_boilerplate-block/` - Frost FSE theme starter
 
 ### Plugins
+
 - `_boilerplate-plugin/` - Standard plugin boilerplate
 
 ### Workflow
+
 1. Copy a boilerplate folder
 2. Rename to your project
 3. Activate in WP Admin
@@ -85,18 +91,21 @@ make lint-fix          # Auto-fix code style
 ## 👥 Team Workflow
 
 ### Git Branches
+
 - `main` - Production-ready code
 - `develop` - Active development
 - `feature/*` - New features
 - `fix/*` - Bug fixes
 
 ### Before Committing
+
 ```bash
 make lint              # Check coding standards
 make test              # Run tests (if configured)
 ```
 
 ### Code Reviews
+
 - All changes require review from the other team member
 - Use Pull Requests for all merges to `main`
 
@@ -105,6 +114,7 @@ make test              # Run tests (if configured)
 ## 🛠️ Development Scenarios
 
 ### Scenario 1: New Plugin
+
 ```bash
 # Copy boilerplate
 cp -r wp-content/plugins/_boilerplate-plugin wp-content/plugins/my-new-plugin
@@ -117,6 +127,7 @@ make wp CMD="plugin activate my-new-plugin"
 ```
 
 ### Scenario 2: WooCommerce Theme
+
 ```bash
 # Copy WooCommerce boilerplate
 cp -r wp-content/themes/_boilerplate-woo wp-content/themes/my-woo-theme
@@ -129,6 +140,7 @@ make watch-theme NAME=my-woo-theme
 ```
 
 ### Scenario 3: Block Theme
+
 ```bash
 # Copy block theme boilerplate
 cp -r wp-content/themes/_boilerplate-block wp-content/themes/my-block-theme
@@ -151,12 +163,14 @@ cp -r wp-content/themes/_boilerplate-block wp-content/themes/my-block-theme
 ## 🐛 Debugging
 
 ### Enable Xdebug in VS Code
+
 1. Install "PHP Debug" extension
 2. Use the provided `.vscode/launch.json`
 3. Set breakpoints in your code
 4. Start debugging (F5)
 
 ### View Logs
+
 ```bash
 make logs              # WordPress container logs
 docker-compose logs db # Database logs
@@ -167,6 +181,7 @@ docker-compose logs db # Database logs
 ## 📦 Deployment
 
 ### Export for Sale
+
 ```bash
 # For plugins
 cd wp-content/plugins/my-plugin
@@ -182,6 +197,7 @@ zip -r my-theme.zip . -x "node_modules/*" "*.git/*" "*.md"
 ## 🆘 Troubleshooting
 
 ### "Cannot connect to database"
+
 ```bash
 make down
 make up
@@ -189,23 +205,19 @@ make up
 ```
 
 ### "Port already in use"
+
 Change ports in `docker-compose.yml`:
+
 - 8000 → 8001 (WordPress)
 - 8080 → 8081 (PHPMyAdmin)
 - 8025 → 8026 (MailHog)
 
 ### "Permission denied"
+
 ```bash
 # Fix file permissions
 docker-compose exec wordpress chown -R www-data:www-data /var/www/html/wp-content
 ```
-
----
-
-## 📞 Support
-
-Team Member 1: [Name] - [Email]
-Team Member 2: [Name] - [Email]
 
 ---
 

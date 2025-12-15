@@ -1,42 +1,42 @@
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit"
-    },
-    "files.associations": {
-      "*.php": "php"
-    },
-    "php.validate.executablePath": "/usr/local/bin/php",
-    "emmet.includeLanguages": {
-      "php": "html"
-    },
-    "files.exclude": {
-      "**/.git": true,
-      "**/node_modules": true,
-      "**/vendor": true,
-      "**/.DS_Store": true
-    },
-    "[php]": {
-      "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
-      "editor.tabSize": 4,
-      "editor.insertSpaces": false
-    },
-    "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.tabSize": 2
-    },
-    "[json]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.tabSize": 2
-    },
-    "intelephense.files.exclude": [
-      "**/.git/**",
-      "**/.svn/**",
-      "**/.hg/**",
-      "**/CVS/**",
-      "**/.DS_Store/**",
-      "**/node_modules/**",
-      "**/bower_components/**",
-      "**/vendor/**/{Tests,tests}/**"
-    ]
-  }
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "files.associations": {
+    "*.php": "php"
+  },
+  "php.validate.executablePath": "/usr/local/bin/php",
+  "emmet.includeLanguages": {
+    "php": "html"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/vendor": true,
+    "**/.DS_Store": true
+  },
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "intelephense.files.exclude": [
+    "**/.git/**",
+    "**/.svn/**",
+    "**/.hg/**",
+    "**/CVS/**",
+    "**/.DS_Store/**",
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**/{Tests,tests}/**"
+  ]
+}
