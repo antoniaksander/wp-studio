@@ -12,21 +12,27 @@
 		return;
 	}
 
-	window.addEventListener( 'load', function () {
-		const cart = document.querySelector( '.site-header-cart' );
+	window.addEventListener(
+		'load',
+		function () {
+			const cart = document.querySelector( '.site-header-cart' );
 
-		cart.addEventListener( 'mouseover', function () {
-			const windowHeight = window.outerHeight,
-				cartBottomPos =
-					this.querySelector(
-						'.widget_shopping_cart_content'
-					).getBoundingClientRect().bottom + this.offsetHeight,
-				cartList = this.querySelector( '.cart_list' );
+			cart.addEventListener(
+				'mouseover',
+				function () {
+					const windowHeight = window.outerHeight,
+					cartBottomPos      =
+						this.querySelector(
+							'.widget_shopping_cart_content'
+						).getBoundingClientRect().bottom + this.offsetHeight,
+					cartList           = this.querySelector( '.cart_list' );
 
-			if ( cartBottomPos > windowHeight ) {
-				cartList.style.maxHeight = '15em';
-				cartList.style.overflowY = 'auto';
-			}
-		} );
-	} );
+					if ( cartBottomPos > windowHeight ) {
+						cartList.style.maxHeight = '15em';
+						cartList.style.overflowY = 'auto';
+					}
+				}
+			);
+		}
+	);
 } )();

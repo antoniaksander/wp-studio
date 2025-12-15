@@ -17,7 +17,6 @@
 
 	/**
 	 * wp.customize.SFGuidedTour
-	 *
 	 */
 	api.SFGuidedTour = {
 		$container: null,
@@ -28,7 +27,7 @@
 		},
 
 		_setupUI() {
-			const self = this,
+			const self       = this,
 				$wpCustomize = $( 'body.wp-customizer .wp-full-overlay' );
 
 			this.$container = $( '<div/>' ).addClass( 'sf-guided-tour' );
@@ -45,9 +44,12 @@
 					! $( 'body' ).hasClass( 'rtl' ) ? 'left' : 'right',
 					$( '#customize-controls' ).width() + 10 + 'px'
 				)
-				.on( 'transitionend', function () {
-					self.$container.addClass( 'sf-loaded' );
-				} );
+				.on(
+					'transitionend',
+					function () {
+						self.$container.addClass( 'sf-loaded' );
+					}
+				);
 
 			// Show first step
 			this._showNextStep();
@@ -79,13 +81,17 @@
 		_addListeners() {
 			const self = this;
 
-			api.state( 'expandedSection' ).bind( function () {
-				self._adjustPosition();
-			} );
+			api.state( 'expandedSection' ).bind(
+				function () {
+					self._adjustPosition();
+				}
+			);
 
-			api.state( 'expandedPanel' ).bind( function () {
-				self._adjustPosition();
-			} );
+			api.state( 'expandedPanel' ).bind(
+				function () {
+					self._adjustPosition();
+				}
+			);
 		},
 
 		_adjustPosition() {
@@ -98,7 +104,7 @@
 			this.$container.removeClass( 'sf-inside-section' );
 
 			const expandedSection = api.state( 'expandedSection' ).get();
-			const expandedPanel = api.state( 'expandedPanel' ).get();
+			const expandedPanel   = api.state( 'expandedPanel' ).get();
 
 			if ( expandedSection && step.section === expandedSection.id ) {
 				this._moveContainer(
@@ -129,10 +135,12 @@
 
 			const containerOffset = this.$container.offset();
 
-			this.$container.css( {
-				transform: '',
-				top: containerOffset.top,
-			} );
+			this.$container.css(
+				{
+					transform: '',
+					top: containerOffset.top,
+				}
+			);
 
 			$( 'body' )
 				.addClass( 'sf-exiting' )
@@ -165,7 +173,7 @@
 			self.$container.show();
 
 			const containerOffset = this.$container.offset();
-			const offsetTop = parseInt( containerOffset.top, 10 );
+			const offsetTop       = parseInt( containerOffset.top, 10 );
 
 			$( 'body' )
 				.addClass( 'sf-entering' )
@@ -178,10 +186,12 @@
 								'animationend.storefront webkitAnimationEnd.storefront'
 							);
 
-						self.$container.css( {
-							top: 'auto',
-							transform: 'translateY(' + offsetTop + 'px)',
-						} );
+						self.$container.css(
+							{
+								top: 'auto',
+								transform: 'translateY(' + offsetTop + 'px)',
+							}
+						);
 					}
 				);
 		},
@@ -191,13 +201,17 @@
 		},
 
 		_closeAllSections() {
-			api.section.each( function ( section ) {
-				section.collapse( { duration: 0 } );
-			} );
+			api.section.each(
+				function ( section ) {
+					section.collapse( { duration: 0 } );
+				}
+			);
 
-			api.panel.each( function ( panel ) {
-				panel.collapse( { duration: 0 } );
-			} );
+			api.panel.each(
+				function ( panel ) {
+					panel.collapse( { duration: 0 } );
+				}
+			);
 		},
 
 		_showNextStep() {
@@ -248,13 +262,18 @@
 
 			this.$container
 				.addClass( 'sf-moving' )
-				.css( {
-					transform: 'translateY(' + position + 'px)',
-				} )
-				.on( 'transitionend.storefront', function () {
-					self.$container.removeClass( 'sf-moving' );
-					self.$container.off( 'transitionend.storefront' );
-				} );
+				.css(
+					{
+						transform: 'translateY(' + position + 'px)',
+					}
+				)
+				.on(
+					'transitionend.storefront',
+					function () {
+						self.$container.removeClass( 'sf-moving' );
+						self.$container.off( 'transitionend.storefront' );
+					}
+				);
 		},
 
 		_getSelector( pointTo ) {
@@ -294,7 +313,9 @@
 		},
 	};
 
-	$( document ).ready( function () {
-		api.SFGuidedTour.init();
-	} );
+	$( document ).ready(
+		function () {
+			api.SFGuidedTour.init();
+		}
+	);
 } )( window.wp, jQuery );

@@ -1,0 +1,29 @@
+cat > .phpcs.xml << 'XML'
+<?xml version="1.0"?>
+<ruleset name="WP-Studio with Baseline">
+    <description>PHP_CodeSniffer config that ignores existing issues</description>
+
+    <!-- 1. Use the WordPress standard -->
+    <rule ref="WordPress" />
+
+    <!-- 2. Load the baseline file to ignore pre-existing issues -->
+    <arg name="ignore-annotations" />
+    <arg name="baseline" value="phpcs-baseline.json" />
+
+    <!-- 3. Files to check -->
+    <file>.</file>
+
+    <!-- 4. Exclude directories that shouldn't be scanned at all -->
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/.git/*</exclude-pattern>
+    <exclude-pattern>*/dist/*</exclude-pattern>
+    <exclude-pattern>*/build/*</exclude-pattern>
+
+    <!-- 5. Output settings -->
+    <arg name="colors" />
+    <!-- 'sp' shows the sniff code, helpful for fixing -->
+    <arg value="sp" />
+</ruleset>
+XML
+echo "✅ Updated .phpcs.xml to use the baseline."
