@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+        "usernamehw.errorlens",
+        "github.copilot",
+        "eamodio.gitlens"
+    ]
+}

@@ -1,0 +1,184 @@
+version: '3.8'
+
+services:
+  # WordPress with PHP 8.2 + Xdebug
+  wordpress:
+    image: wordpress:php8.2-apache
+    container_name: studio_wp
+    ports:
+      - "8000:80"
+    environment:
+      # Database
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      
+      # Debug settings
+      WORDPRESS_DEBUG: 'true'
+      WORDPRESS_DEBUG_LOG: 'true'
+      WORDPRESS_DEBUG_DISPLAY: 'false'
+      WORDPRESS_SCRIPT_DEBUG: 'true'
+      
+      # Multisite support (commented by default)
+      # WORDPRESS_CONFIG_EXTRA: |
+      #   define('WP_ALLOW_MULTISITE', true);
+      #   define('MULTISITE', true);
+      #   define('SUBDOMAIN_INSTALL', false);
+      #   define('DOMAIN_CURRENT_SITE', 'localhost');
+      #   define('PATH_CURRENT_SITE', '/');
+      #   define('SITE_ID_CURRENT_SITE', 1);
+      #   define('BLOG_ID_CURRENT_SITE', 1);
+      
+      # Performance
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_REDIS_HOST', 'redis');
+        define('WP_REDIS_PORT', 6379);
+        define('WP_CACHE', true);
+        define('FS_METHOD', 'direct');
+        
+        // MailHog SMTP
+        define('SMTP_HOST', 'mailhog');
+        define('SMTP_PORT', 1025);
+        
+      # Xdebug 3.x
+      XDEBUG_MODE: debug,develop
+      XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003
+      PHP_IDE_CONFIG: serverName=studio-docker
+      
+    volumes:
+      - ./wp-content/themes:/var/www/html/wp-content/themes
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./wp-content/uploads:/var/www/html/wp-content/uploads
+      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
+      - wordpress_core:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - studio-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # MySQL 8.0 with health check
+  db:
+    image: mysql:8.0
+    container_name: studio_db
+    command: 
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - studio-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for object caching
+  redis:
+    image: redis:7-alpine
+    container_name: studio_redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - studio-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # MailHog for email testing
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: studio_mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - studio-net
+
+  # PHPMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: studio_pma
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      UPLOAD_LIMIT: 128M
+    networks:
+      - studio-net
+    depends_on:
+      - db
+
+  # WP-CLI
+  cli:
+    image: wordpress:cli-php8.2
+    container_name: studio_cli
+    user: "33:33"
+    volumes:
+      - ./wp-content/themes:/var/www/html/wp-content/themes
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - wordpress_core:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+    depends_on:
+      - db
+      - wordpress
+    networks:
+      - studio-net
+
+  # Node.js 20 LTS for asset compilation
+  node:
+    image: node:20-alpine
+    container_name: studio_node
+    working_dir: /app
+    volumes:
+      - ./wp-content:/app
+    command: tail -f /dev/null
+    networks:
+      - studio-net
+
+  # Composer for PHP dependencies
+  composer:
+    image: composer:latest
+    container_name: studio_composer
+    volumes:
+      - ./wp-content/plugins:/app/plugins
+      - ./wp-content/themes:/app/themes
+    command: echo "Composer ready for PHP dependencies"
+    networks:
+      - studio-net
+
+networks:
+  studio-net:
+    driver: bridge
+
+volumes:
+  db_data:
+  redis_data:
+  wordpress_core:

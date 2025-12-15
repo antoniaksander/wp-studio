@@ -1,0 +1,93 @@
+# ===========================================
+# WP-STUDIO GIT IGNORE
+# ===========================================
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+
+# WordPress Core
+wp-content/index.php
+wp-content/languages/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/wp-cache-config.php
+
+# WordPress Plugins (track only your custom ones)
+wp-content/plugins/*
+!wp-content/plugins/_boilerplate-plugin/
+!wp-content/plugins/.gitkeep
+
+# WordPress Themes (track only your custom ones)
+wp-content/themes/*
+!wp-content/themes/_boilerplate-*/
+!wp-content/themes/.gitkeep
+
+# Dependencies
+node_modules/
+vendor/
+bower_components/
+
+# Build artifacts
+*.min.js
+*.min.css
+dist/
+build/
+*.map
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+error_log
+debug.log
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE Files
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Package managers
+composer.phar
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Testing
+/tests/coverage/
+.phpunit.result.cache
+
+# Backup files
+*.sql
+*.sql.gz
+*.tar
+*.tar.gz
+*.zip
+backup-*.sql
+
+# Docker volumes (managed by docker-compose)
+/mysql/
